@@ -18,6 +18,7 @@ public class Model {
 	
 	//Lista finale ricorsione
 	private List<Corso> finale;
+	private boolean primaVolta=true;
 	
 	public Model() {
 		dao=new DidatticaDAO();
@@ -54,6 +55,7 @@ public class Model {
 				dao.setStudentiIscrittiAlCorso(c, mappaStudenti);
 			}
 		}
+		Collections.sort(corsi);
 		return corsi;
 	}
 
@@ -106,9 +108,10 @@ public class Model {
 	private void recursive(List<Corso> parziale,Set<Studente> studenti, int numeroStudenti, int step) {
 		
 		if(studenti.size()==numeroStudenti){
-			if(finale.size()>parziale.size()){
+			if(finale.size()>parziale.size() || primaVolta){
 				finale.clear();
 				finale.addAll(parziale);
+				primaVolta=false;
 				return;
 			}
 		}
@@ -121,7 +124,7 @@ public class Model {
 				System.out.println(parziale);
 				System.out.println(studenti.size());
 				recursive(parziale,studenti,numeroStudenti,step+1);
-				studenti.removeAll(studenti);
+				studenti.removeAll(s);
 				parziale.remove(c);
 			}
 		}	

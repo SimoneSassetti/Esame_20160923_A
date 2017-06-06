@@ -1,8 +1,6 @@
 package it.polito.tdp.gestionale.model;
 
-import java.util.HashMap;
 import java.util.*;
-import java.util.Map;
 
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.DefaultEdge;
@@ -18,9 +16,13 @@ public class Model {
 	private SimpleGraph<Nodo, DefaultEdge> grafo;
 	private Map<Integer, Studente> mappaStudenti;
 	
+	//Lista finale ricorsione
+	private List<Corso> finale;
+	
 	public Model() {
 		dao=new DidatticaDAO();
 		mappaStudenti=new HashMap<Integer,Studente>();
+		finale=new ArrayList<Corso>();
 	}
 	
 	public void creaGrafo(){
@@ -82,4 +84,47 @@ public class Model {
 		}
 		return statCorsi;
 	}
+	
+	public List<Corso> trovaSequenza(){
+		
+		this.creaGrafo();
+		int numeroStudenti=0;
+		List<Integer> lista=this.getStatCorsi();
+		for(int i=1;i<lista.size();i++){
+			numeroStudenti+=lista.get(i);
+		}
+		
+		List<Corso> parziale=new ArrayList<Corso>();
+		Set<Studente> studentiParziale=new HashSet<>();
+		int step=0;
+		
+		recursive(parziale,studentiParziale,numeroStudenti,step);
+		
+		return finale;
+	}
+
+	private void recursive(List<Corso> parziale,Set<Studente> studenti, int numeroStudenti, int step) {
+		
+		if(studenti.size()==numeroStudenti){
+			if(finale.size()>parziale.size()){
+				finale.clear();
+				finale.addAll(parziale);
+				return;
+			}
+		}
+		
+		for(Corso c: corsi){
+			if(!parziale.contains(c)){
+				List<Studente> s=c.getStudenti();
+				studenti.addAll(s);
+				parziale.add(c);
+				System.out.println(parziale);
+				System.out.println(studenti.size());
+				recursive(parziale,studenti,numeroStudenti,step+1);
+				studenti.removeAll(studenti);
+				parziale.remove(c);
+			}
+		}	
+	}
+	
 }

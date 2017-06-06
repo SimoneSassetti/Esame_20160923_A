@@ -100,7 +100,7 @@ public class Corso extends Nodo{
 
 	@Override
 	public String toString() {
-		return nome;
+		return codins;
 	}
 	
 }

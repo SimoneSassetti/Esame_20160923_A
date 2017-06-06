@@ -17,7 +17,7 @@ public class DidatticaDAO {
 	/*
 	 * Ottengo tutti gli studenti iscritti al Corso
 	 */
-	public void getStudentiIscrittiAlCorso(Corso corso, Map<Integer, Studente> mapStudenti) {
+	public void setStudentiIscrittiAlCorso(Corso corso, Map<Integer, Studente> mapStudenti) {
 		final String sql = "SELECT studente.matricola FROM iscrizione, studente WHERE iscrizione.matricola=studente.matricola AND codins=?";
 
 		List<Studente> studentiIscrittiAlCorso = new ArrayList<Studente>();
@@ -35,10 +35,9 @@ public class DidatticaDAO {
 				if (studente != null) {
 					studentiIscrittiAlCorso.add(studente);
 				} else {
-					System.out.println("ERRORE! Lo studente non è presente!");
+					System.out.println("ERRORE! Lo studente non e' presente!");
 				}
 			}
-
 			corso.setStudenti(studentiIscrittiAlCorso);
 
 		} catch (SQLException e) {
@@ -53,21 +52,17 @@ public class DidatticaDAO {
 	public List<Corso> getTuttiICorsi() {
 
 		final String sql = "SELECT * FROM corso";
-
 		List<Corso> corsi = new LinkedList<Corso>();
 
 		try {
 			Connection conn = ConnectDB.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
-
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
-
 				Corso s = new Corso(rs.getString("codins"), rs.getInt("crediti"), rs.getString("nome"), rs.getInt("pd"));
 				corsi.add(s);
 			}
-
 			return corsi;
 
 		} catch (SQLException e) {
@@ -88,15 +83,12 @@ public class DidatticaDAO {
 		try {
 			Connection conn = ConnectDB.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
-
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
-
 				Studente s = new Studente(rs.getInt("matricola"), rs.getString("cognome"), rs.getString("nome"), rs.getString("CDS"));
 				studenti.add(s);
 			}
-
 			return studenti;
 
 		} catch (SQLException e) {

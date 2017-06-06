@@ -1,6 +1,7 @@
 package it.polito.tdp.gestionale;
 
 import java.net.URL;
+import java.util.*;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.gestionale.model.Model;
@@ -28,7 +29,13 @@ public class DidatticaGestionaleController {
 	@FXML
 	void doCorsiFrequentati(ActionEvent event) {
 		txtResult.clear();
-		txtResult.setText("premuto Corsi Frequentati");
+		txtResult.setText("premuto Corsi Frequentati.\n");
+		
+		model.creaGrafo();
+		List<Integer> lista=model.getStatCorsi();
+		for(int i=0; i<lista.size(); i++){
+			txtResult.appendText(String.format("Alunni che seguono %d corsi: %d\n", i,lista.get(i)));
+		}
 	}
 	
 	@FXML
@@ -41,11 +48,9 @@ public class DidatticaGestionaleController {
 	void initialize() {
 		assert txtMatricolaStudente != null : "fx:id=\"txtMatricolaStudente\" was not injected: check your FXML file 'DidatticaGestionale.fxml'.";
 		assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'DidatticaGestionale.fxml'.";
-
 	}
 
 	public void setModel(Model model) {
 		this.model = model;
 	}
-
 }

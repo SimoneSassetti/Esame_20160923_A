@@ -3,7 +3,7 @@ package it.polito.tdp.gestionale.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Studente {
+public class Studente extends Nodo{
 
 	private List<Corso> corsi;
 	private int matricola;
@@ -73,4 +73,32 @@ public class Studente {
 	public void setCorsi(List<Corso> corsi) {
 		this.corsi = corsi;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + matricola;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Studente other = (Studente) obj;
+		if (matricola != other.matricola)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return nome+" "+cognome;
+	}
+	
 }

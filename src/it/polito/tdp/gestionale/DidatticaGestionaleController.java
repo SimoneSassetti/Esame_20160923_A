@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 public class DidatticaGestionaleController {
 
 	private Model model;
-
 	@FXML
 	private ResourceBundle resources;
 
@@ -41,7 +40,9 @@ public class DidatticaGestionaleController {
 	@FXML
 	void doVisualizzaCorsi(ActionEvent event) {
 		txtResult.clear();
-		txtResult.setText("premuto Visualizza Corsi");
+		txtResult.setText("premuto Visualizza Corsi.\n");
+		
+		txtResult.appendText(model.findMinimalSet().toString());
 	}
 
 	@FXML

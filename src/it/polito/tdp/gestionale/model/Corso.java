@@ -3,7 +3,7 @@ package it.polito.tdp.gestionale.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Corso extends Nodo{
+public class Corso extends Nodo implements Comparable<Corso>{
 
 	private List<Studente> studenti;
 	private String codins;
@@ -100,7 +100,11 @@ public class Corso extends Nodo{
 
 	@Override
 	public String toString() {
-		return nome;
+		return codins;
 	}
 	
+	@Override
+	public int compareTo(Corso c) {
+		return this.codins.compareTo(c.codins);
+	}
 }

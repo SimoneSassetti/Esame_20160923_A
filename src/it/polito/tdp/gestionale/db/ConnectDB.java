@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConnectDB {
 
-	static private final String jdbcUrl = "jdbc:mysql://localhost/iscritti_corsi_gestionale?user=root";//occhio al DB di connessione
+	static private final String jdbcUrl = "jdbc:mysql://localhost/iscritticorsi?user=root";//occhio al DB di connessione
 	static private Connection connection = null;
 
 	public static Connection getConnection() {

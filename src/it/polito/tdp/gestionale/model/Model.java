@@ -1,8 +1,6 @@
 package it.polito.tdp.gestionale.model;
 
-import java.util.HashMap;
 import java.util.*;
-import java.util.Map;
 
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.DefaultEdge;
@@ -81,5 +79,42 @@ public class Model {
 			statCorsi.set(ncorsi, counter);
 		}
 		return statCorsi;
+	}
+	
+	public List<Corso> findMinimalSet(){
+		List<Corso> parziale=new ArrayList<Corso>();
+		List<Corso> migliore=new ArrayList<Corso>();
+		
+		recursive(parziale,migliore);
+		
+		return migliore;
+	}
+
+	private void recursive(List<Corso> parziale, List<Corso> migliore) {
+		
+		//System.out.println(parziale);
+		Set<Studente> setStudenti=new HashSet<Studente>(this.getTuttiStudenti());
+		for(Corso corso: parziale){
+			setStudenti.removeAll(corso.getStudenti());
+		}
+		
+		if(setStudenti.isEmpty()){
+			if(migliore.isEmpty()){
+				migliore.addAll(parziale);
+			}
+			if(parziale.size()<migliore.size()){
+				migliore.clear();
+				migliore.addAll(parziale);
+			}
+		}
+		
+		for(Corso corso: this.getTuttiCorsi()){
+			if(parziale.isEmpty() || corso.compareTo(parziale.get(parziale.size()-1))>0){
+				parziale.add(corso);
+				recursive(parziale,migliore);
+				parziale.remove(corso);
+			}
+		}
+		
 	}
 }
